@@ -1,5 +1,5 @@
 check "health_check" {
-  data "http" "terraform_io" {
+  data "http2" "terraform_io" {
     url = "https://www.terraform.io"
   }
 
