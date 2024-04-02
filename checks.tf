@@ -25,3 +25,11 @@ check "cluster_version" {
     error_message = "The cluster version is ${module.eks.cluster_version}"
   }
 }
+
+check "number_of_access_entries" {
+
+  assert {
+    condition = length(module.eks.access_entries)==1
+    error_message = "There are more than 1 access entries"
+  }
+}
