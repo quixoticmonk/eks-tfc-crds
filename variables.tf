@@ -5,7 +5,7 @@ variable "k8s_admin_role_arn" {
 
 variable "cluster_version" {
     type = string
-    default = "1.29"
+    default = "1.28"
     description = "K8S version"
     validation {
     condition     = contains(["1.29", "1.28"], var.cluster_version)
