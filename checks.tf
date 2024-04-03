@@ -33,7 +33,7 @@ check "access_config" {
   }
 
   assert {
-    condition = module.eks.access_config.authentication_mode==API_AND_CONFIG_MAP
+    condition = module.eks.access_config.authentication_mode=="API_AND_CONFIG_MAP"
     error_message = "Both API and config map are not present on auth mode"
   }
 }
