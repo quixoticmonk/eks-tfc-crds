@@ -33,7 +33,7 @@ check "access_config" {
   }
 
   assert {
-    condition = data.aws_eks_cluster.this.access_config.authentication_mode=="API_AND_CONFIG_MAP"
+    condition = data.aws_eks_cluster.this.access_config[0].authentication_mode=="API_AND_CONFIG_MAP"
     error_message = "Both API and config map are not present on auth mode"
   }
 }
