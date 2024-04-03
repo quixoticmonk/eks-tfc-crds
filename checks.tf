@@ -28,12 +28,12 @@ check "cluster_version" {
 
 check "access_config" {
 
-  data "aws_eks_cluster" "example" {
+  data "aws_eks_cluster" "this" {
     name = local.name
   }
 
   assert {
-    condition = module.eks.access_config.authentication_mode=="API_AND_CONFIG_MAP"
+    condition = data.aws_eks_cluster.this.access_config.authentication_mode=="API_AND_CONFIG_MAP"
     error_message = "Both API and config map are not present on auth mode"
   }
 }
