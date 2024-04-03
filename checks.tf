@@ -26,10 +26,14 @@ check "cluster_version" {
   }
 }
 
-check "number_of_access_entries" {
+check "access_config" {
+
+  data "aws_eks_cluster" "example" {
+    name = local.name
+  }
 
   assert {
-    condition = length(module.eks.access_entries)==1
-    error_message = "There are more than 1 access entries"
+    condition = module.eks.access_config.authentication_mode==API_AND_CONFIG_MAP
+    error_message = "Both API and config map are not present on auth mode"
   }
 }
