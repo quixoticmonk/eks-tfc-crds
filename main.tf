@@ -66,7 +66,7 @@ module "eks" {
     }
   }
 
-    access_entries = {
+  access_entries = {
     # One access entry with a policy associated
     example = {
       kubernetes_groups = []
@@ -76,7 +76,7 @@ module "eks" {
         example = {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy"
           access_scope = {
-            type       = "cluster"
+            type = "cluster"
           }
         }
       }
@@ -154,9 +154,54 @@ resource "aws_iam_policy" "additional" {
 }
 
 
+# Adding NewRelic addon from the marketplace
+
 resource "aws_eks_addon" "newrelic_addon" {
-  depends_on = [module.eks]
-  addon_name = "new-relic_kubernetes-operator"
-  cluster_name = module.eks.cluster_name
+  depends_on    = [module.eks]
+  addon_name    = "new-relic_kubernetes-operator"
+  cluster_name  = module.eks.cluster_name
   addon_version = "v0.1.9-eksbuild.1"
 }
+
+resource "kubernetes_manifest" "nribundle_nribundle_sample" {
+  depends_on = [ aws_eks_addon.newrelic_addon]
+  manifest = {
+    "apiVersion" = "newrelic.com/v1alpha1"
+    "kind" = "NRIBundle"
+    "metadata" = {
+      "name" = "nribundle-sample"
+    }
+    "spec" = {
+      "global" = {
+        "cluster" = module.eks.cluster_name
+        "licenseKey" = var.nr_license_key
+        "lowDataMode" = true
+      }
+      "kube-state-metrics" = {
+        "enabled" = true
+        "image" = {
+          "tag" = "v2.10.0"
+        }
+      }
+      "kubeEvents" = {
+        "enabled" = true
+      }
+      "newrelic-infrastructure" = {
+        "enabled" = true
+        "privileged" = true
+      }
+      "newrelic-prometheus-agent" = {
+        "config" = {
+          "kubernetes" = {
+            "integrations_filter" = {
+              "enabled" = false
+            }
+          }
+        }
+        "enabled" = true
+        "lowDataMode" = true
+      }
+    }
+  }
+}
+
