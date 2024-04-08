@@ -6,6 +6,7 @@ resource "kubernetes_manifest" "nribundle_nribundle_sample" {
     "kind" = "NRIBundle"
     "metadata" = {
       "name" = "nribundle-sample"
+      "namespace" = "newrelic"
     }
     "spec" = {
       "global" = {
