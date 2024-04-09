@@ -1,6 +1,6 @@
 
 locals {
-  name            = "marketplace-webinar-demo"
+  name            ="marketplace-webinar"
   region          = "us-east-1"
 
   tags = {
