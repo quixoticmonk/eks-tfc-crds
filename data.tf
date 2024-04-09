@@ -21,3 +21,8 @@ data "aws_ecrpublic_authorization_token" "token" {
   provider = aws.virginia
 }
 
+
+
+data "aws_iam_openid_connect_provider" "this" {
+  url = data.aws_eks_cluster.this.identity.oidc.issuer
+}

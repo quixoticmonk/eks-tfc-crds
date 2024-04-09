@@ -10,7 +10,7 @@ module "karpenter" {
 
   # EKS Fargate currently does not support Pod Identity
   enable_irsa            = true
-  irsa_oidc_provider_arn = data.aws_eks_cluster.this.identity[0].oidc[0].issuer
+  irsa_oidc_provider_arn = data.aws_iam_openid_connect_provider.this.arn
 
   # Used to attach additional IAM policies to the Karpenter node IAM role
   node_iam_role_additional_policies = {
