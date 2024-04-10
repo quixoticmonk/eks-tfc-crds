@@ -91,12 +91,18 @@ resource "kubectl_manifest" "karpenter_node_pool" {
           nodeClassRef:
             name: default
           requirements:
-            - key: "karpenter.k8s.aws/capacity-type"
+            - key: "karpenter.k8s.aws/instance-category"
               operator: In
-              values: ["spot"]
-            - key: "karpenter.k8s.aws/instance-size"
-              operator: NotIn
-              values: [Nano,micro, small]
+              values: ["c", "m", "r"]
+            - key: "karpenter.k8s.aws/instance-cpu"
+              operator: In
+              values: ["4", "8"]
+            - key: "karpenter.k8s.aws/instance-generation"
+              operator: Gt
+              values: ["2"]
+            - key: "karpenter.sh/capacity-type"
+              operator: In
+              values: ["spot"]   
       limits:
         cpu: 1000
       disruption:
