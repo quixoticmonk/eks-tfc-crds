@@ -23,9 +23,6 @@ resource "kubernetes_manifest" "nribundle_nribundle_sample" {
       "kubeEvents" = {
         "enabled" = true
       }
-      "newrelic-pixie" = {
-        "enabled" = true
-      }
       "newrelic-infrastructure" = {
         "enabled" = true
         "privileged" = true
