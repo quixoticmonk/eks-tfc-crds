@@ -67,6 +67,8 @@ resource "kubectl_manifest" "karpenter_node_class" {
             karpenter.sh/discovery: ${data.aws_eks_cluster.this.name}
       tags:
         karpenter.sh/discovery: ${data.aws_eks_cluster.this.name}
+        NodeType: "karpenter-workshop"
+        IntentLabel: "apps"
   YAML
 
   depends_on = [
@@ -82,21 +84,23 @@ resource "kubectl_manifest" "karpenter_node_pool" {
       name: default
     spec:
       template:
+        metadata:
+          labels:
+            intent: apps
         spec:
           nodeClassRef:
             name: default
+
           requirements:
-            - key: "karpenter.k8s.aws/instance-category"
+            - key: karpenter.sh/capacity-type
               operator: In
-              values: ["c", "m", "r"]
-            - key: "karpenter.k8s.aws/instance-cpu"
-              operator: In
-              values: ["4", "8"]
-            - key: "karpenter.sh/capacity-type"
-              operator: In
-              values: ["spot"]   
+              values: ["spot"]
+            - key: karpenter.k8s.aws/instance-size
+              operator: NotIn
+              values: [nano, micro, small, medium, large]
       limits:
         cpu: 1000
+        memory: 1000Gi
       disruption:
         consolidationPolicy: WhenEmpty
         consolidateAfter: 30s
