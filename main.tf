@@ -31,7 +31,7 @@ resource "kubernetes_manifest" "nribundle_nribundle_sample" {
         "config" = {
           "kubernetes" = {
             "integrations_filter" = {
-              "enabled" = false
+              "enabled" = true
             }
           }
         }
