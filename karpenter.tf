@@ -94,7 +94,7 @@ resource "kubectl_manifest" "karpenter_node_pool" {
           requirements:
             - key: karpenter.sh/capacity-type
               operator: In
-              values: ["spot"]
+              values: ["spot","on-demand"]
             - key: karpenter.k8s.aws/instance-size
               operator: NotIn
               values: [nano, micro, small, medium, large]
