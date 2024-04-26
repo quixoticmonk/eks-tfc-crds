@@ -97,7 +97,7 @@ resource "kubectl_manifest" "karpenter_node_pool" {
               values: ["spot","on-demand"]
             - key: karpenter.k8s.aws/instance-size
               operator: NotIn
-              values: [nano, micro, small, medium, large]
+              values: [nano, micro, small, medium]
       limits:
         cpu: 1000
         memory: 1000Gi
