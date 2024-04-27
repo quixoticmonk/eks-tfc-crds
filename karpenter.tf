@@ -102,7 +102,7 @@ resource "kubectl_manifest" "karpenter_node_pool" {
         cpu: 1000
         memory: 1000Gi
       disruption:
-        consolidationPolicy: WhenEmpty
+        consolidationPolicy: WhenUnderutilized
         consolidateAfter: 30s
   YAML
 
