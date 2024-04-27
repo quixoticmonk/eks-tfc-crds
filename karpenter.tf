@@ -103,7 +103,6 @@ resource "kubectl_manifest" "karpenter_node_pool" {
         memory: 1000Gi
       disruption:
         consolidationPolicy: WhenUnderutilized
-        consolidateAfter: 30s
   YAML
 
   depends_on = [
