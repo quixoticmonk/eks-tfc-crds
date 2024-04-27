@@ -67,7 +67,6 @@ resource "kubectl_manifest" "karpenter_node_class" {
             karpenter.sh/discovery: ${data.aws_eks_cluster.this.name}
       tags:
         karpenter.sh/discovery: ${data.aws_eks_cluster.this.name}
-        NodeType: "karpenter-workshop"
         IntentLabel: "apps"
   YAML
 
