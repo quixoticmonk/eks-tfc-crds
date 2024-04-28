@@ -15,7 +15,17 @@ terraform {
       version = ">= 2.0"
     }
 
+        newrelic = {
+      source  = "newrelic/newrelic"
+      version = "3.35.1"
+    }
+
   }
+}
+
+provider "newrelic" {
+  api_key    = var.nr_apikey
+  account_id = var.nr_account_id
 }
 
 provider "aws" {
