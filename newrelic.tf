@@ -4,6 +4,7 @@ resource "kubernetes_manifest" "deployment_inflate" {
     "kind" = "Deployment"
     "metadata" = {
       "name" = "inflate"
+"namespace" = "default"
     }
     "spec" = {
       "replicas" = 0
